@@ -1,0 +1,14 @@
+@import "./variables.scss";
+
+button {
+    background-color: $primary;
+    color: $white;
+    border-color: $light-grey;
+    border-radius: $radius;
+    &:hover{
+        background-color: $white;
+        color: $primary;
+        border-color: $light-grey;
+        border-radius: $radius;
+    }
+}
