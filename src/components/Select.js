@@ -1,8 +1,8 @@
 import React from "react";
 
-const Select = ({ sign, changeRowSign }) => {
+const Select = ({ sign, handleChange }) => {
   return (
-    <select id="cars" value={sign} onChange={changeRowSign}>
+    <select name="sign" value={sign} onChange={handleChange}>
       <option value="+">+</option>
       <option value="-">-</option>
     </select>
