@@ -7,11 +7,9 @@ button {
     border-radius: $radius;
     margin: $margin;
     height: $buttonHeight;
+    transition: all .3s ease-in;
     &:hover{
-        background-color: $white;
+        background-color: $white;   
         color: $primary;
-        border-color: $light-grey;
-        border-radius: $radius;
-        height: $buttonHeight;
     }
 }
