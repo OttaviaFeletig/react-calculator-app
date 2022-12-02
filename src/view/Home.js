@@ -35,6 +35,7 @@ class Home extends Component {
     const isDisabled = ev.target.dataset.attribute === "true" ? true : false;
     const id = parseInt(ev.target.parentNode.getAttribute("id"));
     this.setState((prev) => ({
+      ...prev,
       allRows: prev.allRows.map((row) => {
         return row.id === id
           ? {
@@ -49,6 +50,7 @@ class Home extends Component {
   handleDelete(ev) {
     const id = parseInt(ev.target.parentNode.getAttribute("id"));
     this.setState((prev) => ({
+      ...prev,
       allRows: prev.allRows
         .filter((row) => row.id !== id)
         .map((row, index) => {
