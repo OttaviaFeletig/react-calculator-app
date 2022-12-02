@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Button from "../components/Button";
 import NumberInput from "../components/NumberInput";
-import Select from "../components/Select";
+import Calculator from "../components/Calculator";
 
-class Calculator extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { newRowN: "", allRows: [], result: 0 };
@@ -82,29 +82,11 @@ class Calculator extends Component {
         />
         <Button name={"addRow"} text={"Add row"} handleClick={this.handleAdd} />
         {this.state.allRows.map((row) => (
-          <div key={row.id} id={row.id}>
-            <Select
-              sign={row.sign}
-              handleChange={this.handleRowChange}
-              disabled={row.isDisabled}
-            />
-            <NumberInput
-              handleChange={this.handleRowChange}
-              value={row.number}
-              disabled={row.isDisabled}
-            />
-            <Button
-              name={"deleteRow"}
-              text={"Delete"}
-              handleClick={this.handleDelete}
-            />
-            <Button
-              name={"isDisabled"}
-              dataAttribute={row.isDisabled}
-              text={row.isDisabled ? "Enable" : "Disable"}
-              handleClick={this.handleRowChange}
-            />
-          </div>
+          <Calculator
+            row={row}
+            handleRowChange={this.handleRowChange}
+            handleDelete={this.handleDelete}
+          />
         ))}
         <p>Result: {!isNaN(this.state.result) && this.state.result}</p>
       </div>
@@ -112,4 +94,4 @@ class Calculator extends Component {
   }
 }
 
-export default Calculator;
+export default Home;

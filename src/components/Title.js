@@ -1,3 +1,3 @@
-export default function Title(props) {
-  return <h2>{props.children}</h2>;
+export default function Title({ children }) {
+  return <h2>{children}</h2>;
 }
