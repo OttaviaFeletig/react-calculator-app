@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Button from "../components/Button";
 import NumberInput from "../components/NumberInput";
 import Calculator from "../components/Calculator";
-import "../style/container.scss";
 import Title from "../components/Title";
+import "../style/container.scss";
 class Home extends Component {
   constructor(props) {
     super(props);
