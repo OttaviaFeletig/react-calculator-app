@@ -6,17 +6,14 @@ import Select from "../components/Select";
 class Calculator extends Component {
   constructor(props) {
     super(props);
-    this.state = { newRowN: 0, allRows: [] };
+    this.state = { newRowN: 0, allRows: [], result: 0 };
     this.changeNewN = this.changeNewN.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleRowChange = this.handleRowChange.bind(this);
-    // this.changeRowNumber = this.changeRowNumber.bind(this);
-    // this.changeRowSign = this.changeRowSign.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDisable = this.handleDisable.bind(this);
   }
   changeNewN(ev) {
-    // console.log(ev.target.value);
     this.setState((prev) => ({ ...prev, newRowN: ev.target.value }));
   }
   handleAdd() {
@@ -25,7 +22,7 @@ class Calculator extends Component {
         ...prev.allRows,
         {
           id: this.state.allRows.length,
-          sign: "+",
+          sign: "+1",
           number: this.state.newRowN,
         },
       ],
@@ -36,7 +33,6 @@ class Calculator extends Component {
   handleRowChange(ev) {
     console.log(ev.target.name);
     const id = parseInt(ev.target.parentNode.getAttribute("id"));
-    // const sign = ev.target.previousSibling.value;
     this.setState((prev) => ({
       allRows: prev.allRows.map((row) => {
         return row.id === id
@@ -45,19 +41,30 @@ class Calculator extends Component {
       }),
     }));
   }
-  changeRowSign() {
-    console.log("changing row sign");
-  }
+
   handleDelete() {
     console.log("deleting");
   }
   handleDisable() {
     console.log("disabling");
   }
+  calculateRes() {
+    const res = this.state.allRows.reduce((accumulator, currentValue) => {
+      return (
+        accumulator +
+        Math.sign(currentValue.sign) * parseInt(currentValue.number)
+      );
+    }, 0);
+    this.setState((prev) => ({ ...prev, result: res }));
+  }
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.allRows !== this.state.allRows) {
+      this.calculateRes();
+    }
+  }
   render() {
     return (
       <div>
-        {/* <h1>Calculator</h1> */}
         <NumberInput
           handleChange={this.changeNewN}
           value={this.state.newRowN}
@@ -74,6 +81,7 @@ class Calculator extends Component {
             <Button text={"Disable"} handleDisable={this.handleDisable} />
           </div>
         ))}
+        <p>Result: {!isNaN(this.state.result) && this.state.result}</p>
       </div>
     );
   }
