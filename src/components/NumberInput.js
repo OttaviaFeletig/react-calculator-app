@@ -1,8 +1,15 @@
 import React from "react";
 
-const NumberInput = ({ handleChange, value }) => {
+const NumberInput = ({ handleChange, value, disabled, placeholder }) => {
   return (
-    <input name="number" type="number" value={value} onChange={handleChange} />
+    <input
+      name="number"
+      type="number"
+      value={value}
+      onChange={handleChange}
+      disabled={disabled}
+      placeholder={placeholder && placeholder}
+    />
   );
 };
 

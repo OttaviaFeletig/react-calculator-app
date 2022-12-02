@@ -6,12 +6,11 @@ import Select from "../components/Select";
 class Calculator extends Component {
   constructor(props) {
     super(props);
-    this.state = { newRowN: 0, allRows: [], result: 0 };
+    this.state = { newRowN: "", allRows: [], result: 0 };
     this.changeNewN = this.changeNewN.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleRowChange = this.handleRowChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleDisable = this.handleDisable.bind(this);
   }
   changeNewN(ev) {
     this.setState((prev) => ({ ...prev, newRowN: ev.target.value }));
@@ -23,38 +22,49 @@ class Calculator extends Component {
         {
           id: this.state.allRows.length,
           sign: "+1",
-          number: this.state.newRowN,
+          number: this.state.newRowN !== "" ? this.state.newRowN : 0,
+          isDisabled: false,
         },
       ],
-      newRowN: 0,
+      newRowN: "",
     }));
   }
 
   handleRowChange(ev) {
-    console.log(ev.target.name);
+    const isDisabled = ev.target.dataset.attribute === "true" ? true : false;
     const id = parseInt(ev.target.parentNode.getAttribute("id"));
     this.setState((prev) => ({
       allRows: prev.allRows.map((row) => {
         return row.id === id
-          ? { ...row, [ev.target.name]: ev.target.value }
+          ? {
+              ...row,
+              [ev.target.name]:
+                ev.target.name === "isDisabled" ? !isDisabled : ev.target.value,
+            }
           : row;
       }),
     }));
   }
-
-  handleDelete() {
-    console.log("deleting");
-  }
-  handleDisable() {
-    console.log("disabling");
+  handleDelete(ev) {
+    const id = parseInt(ev.target.parentNode.getAttribute("id"));
+    this.setState((prev) => ({
+      allRows: prev.allRows
+        .filter((row) => row.id !== id)
+        .map((row, index) => {
+          return {
+            ...row,
+            id: index,
+          };
+        }),
+    }));
   }
   calculateRes() {
-    const res = this.state.allRows.reduce((accumulator, currentValue) => {
-      return (
-        accumulator +
-        Math.sign(currentValue.sign) * parseInt(currentValue.number)
-      );
-    }, 0);
+    let res = 0;
+    this.state.allRows.forEach((row) => {
+      if (!row.isDisabled) {
+        res = res + Math.sign(row.sign) * parseInt(row.number);
+      }
+    });
     this.setState((prev) => ({ ...prev, result: res }));
   }
   componentDidUpdate(previousProps, previousState) {
@@ -68,17 +78,32 @@ class Calculator extends Component {
         <NumberInput
           handleChange={this.changeNewN}
           value={this.state.newRowN}
+          placeholder={"Enter a number"}
         />
-        <Button text={"Add row"} handleAdd={this.handleAdd} />
+        <Button name={"addRow"} text={"Add row"} handleClick={this.handleAdd} />
         {this.state.allRows.map((row) => (
           <div key={row.id} id={row.id}>
-            <Select sign={row.sign} handleChange={this.handleRowChange} />
+            <Select
+              sign={row.sign}
+              handleChange={this.handleRowChange}
+              disabled={row.isDisabled}
+            />
             <NumberInput
               handleChange={this.handleRowChange}
               value={row.number}
+              disabled={row.isDisabled}
             />
-            <Button text={"Delete"} handleDelete={this.handleDelete} />
-            <Button text={"Disable"} handleDisable={this.handleDisable} />
+            <Button
+              name={"deleteRow"}
+              text={"Delete"}
+              handleClick={this.handleDelete}
+            />
+            <Button
+              name={"isDisabled"}
+              dataAttribute={row.isDisabled}
+              text={row.isDisabled ? "Enable" : "Disable"}
+              handleClick={this.handleRowChange}
+            />
           </div>
         ))}
         <p>Result: {!isNaN(this.state.result) && this.state.result}</p>
