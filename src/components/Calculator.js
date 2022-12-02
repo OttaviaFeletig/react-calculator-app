@@ -7,7 +7,7 @@ import React from "react";
 
 const Calculator = ({ row, handleRowChange, handleDelete }) => {
   return (
-    <div key={row.id} id={row.id}>
+    <div id={row.id} style={{ height: "25px" }}>
       <Select
         sign={row.sign}
         handleChange={handleRowChange}

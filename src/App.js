@@ -13,7 +13,7 @@ class App extends React.Component {
     return (
       <div>
         <Title>React Version: {this.state.version}</Title>
-        <Title>Simple calculator</Title>
+
         <Home />
       </div>
     );

@@ -1,0 +1,7 @@
+@import "./variables.scss";
+
+select{
+    border-radius: $radius;
+    margin: $margin;
+    height: $buttonHeight;
+}

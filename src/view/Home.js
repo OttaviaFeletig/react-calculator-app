@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Button from "../components/Button";
 import NumberInput from "../components/NumberInput";
 import Calculator from "../components/Calculator";
-
+import "../style/container.scss";
+import Title from "../components/Title";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -74,22 +75,30 @@ class Home extends Component {
   }
   render() {
     return (
-      <div>
-        <NumberInput
-          handleChange={this.changeNewN}
-          value={this.state.newRowN}
-          placeholder={"Enter a number"}
-        />
-        <Button name={"addRow"} text={"Add row"} handleClick={this.handleAdd} />
-        {this.state.allRows.map((row) => (
-          <Calculator
-            row={row}
-            handleRowChange={this.handleRowChange}
-            handleDelete={this.handleDelete}
+      <main>
+        <Title>Simple calculator</Title>
+        <div className="mainDiv">
+          <NumberInput
+            handleChange={this.changeNewN}
+            value={this.state.newRowN}
+            placeholder={"Enter a number"}
           />
-        ))}
+          <Button
+            name={"addRow"}
+            text={"Add row"}
+            handleClick={this.handleAdd}
+          />
+          {this.state.allRows.map((row) => (
+            <Calculator
+              key={row.id}
+              row={row}
+              handleRowChange={this.handleRowChange}
+              handleDelete={this.handleDelete}
+            />
+          ))}
+        </div>
         <p>Result: {!isNaN(this.state.result) && this.state.result}</p>
-      </div>
+      </main>
     );
   }
 }

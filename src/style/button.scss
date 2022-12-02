@@ -5,10 +5,13 @@ button {
     color: $white;
     border-color: $light-grey;
     border-radius: $radius;
+    margin: $margin;
+    height: $buttonHeight;
     &:hover{
         background-color: $white;
         color: $primary;
         border-color: $light-grey;
         border-radius: $radius;
+        height: $buttonHeight;
     }
 }

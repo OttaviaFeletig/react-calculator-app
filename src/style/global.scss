@@ -5,10 +5,5 @@ body {
   background-color: $light-grey;
   color:$grey;
   font-family: 'Roboto', Arial, sans-serif;
-}
-
-#root {
-  margin: 15px;
-  display: flex;
-  justify-content: center;
+  margin: $margin;
 }

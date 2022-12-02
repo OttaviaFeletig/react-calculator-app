@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../style/inputNumber.scss";
 const NumberInput = ({ handleChange, value, disabled, placeholder }) => {
   return (
     <input
