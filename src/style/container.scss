@@ -12,4 +12,8 @@ main{
         flex-direction: column;
         min-width: 350px;
     }
+    & div {
+        display: flex;
+         justify-content: space-around
+    }
 }
